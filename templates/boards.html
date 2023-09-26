@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Boards</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            {% for board in current_user.boards %}
+                <div class="col-sm">
+                    <div class="card card-board">
+                        <div class="card-header">
+                            {{ board.name }}</b>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('uploaded_file', filename=board.filename) }}" alt="{{ board.name }}" width="200"></img>
+                            <a class="btn btn-primary" href="{{ url_for('board', id=board.id) }}">Show Board</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

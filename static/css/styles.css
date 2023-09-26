@@ -1,0 +1,96 @@
+/* styles.css */
+
+/* Reset some default styles */
+body {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color: #fff;
+}
+
+/* Style the navbar */
+.navbar {
+  background-color: #8f6e1b; /* Change this to your desired background color */
+  color: #fff; /* Text color on the navbar */
+  padding: 10px 0;
+}
+
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 1800px; /* Adjust as needed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-list {
+  list-style: none;
+}
+
+.nav-list li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.nav-list li:last-child {
+  margin-right: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Style links on hover */
+.nav-list a:hover {
+  text-decoration: underline;
+}
+
+.card-board{
+  width: 300px;
+}
+
+.card-header{
+  background-color: rgb(33, 33, 33);
+}
+
+.card-body{
+  background-color: rgb(46, 46, 46);
+}
+
+.page-title{
+  margin-top: 20px;
+}
+
+.cards{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+  margin-left: 50px;
+}
+
+.board-show{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}

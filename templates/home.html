@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<nav>
+	</nav>
+	<h1 class="page-title">YugiOh Forbidden Memories - Fusion Friend</h1>
+	{% if current_user.is_authenticated %}
+	<h2>You are logged in</h2>
+	<a href="/logout">Logout</a>
+	{% else %}
+	<h2>You are not logged in</h2>
+	{% endif %}
+{% endblock %}
