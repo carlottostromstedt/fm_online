@@ -35,7 +35,7 @@ class Users(UserMixin, db.Model):
 class Board(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), unique=True, nullable=False)
-        filename = db.Column(db.String(250), unique=True, nullable=False)
+    filename = db.Column(db.String(250), unique=True, nullable=False)
     fusions = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('Users', back_populates='boards')

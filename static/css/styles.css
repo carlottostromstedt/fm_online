@@ -2,17 +2,32 @@
 
 /* Reset some default styles */
 body {
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 100vw;
+  min-height: 100vh;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
   color: #fff;
+  background-image: url("../assets/yugioh_background2.jpeg");
+  backdrop-filter: blur(10px) brightness(60%);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 /* Style the navbar */
 .navbar {
-  background-color: #8f6e1b; /* Change this to your desired background color */
+  background-color: transparent; /* Change this to your desired background color */
   color: #fff; /* Text color on the navbar */
   padding: 10px 0;
 }
@@ -58,6 +73,8 @@ body {
 
 .card-board{
   width: 300px;
+  height: 300px;
+  margin-top: 20px;
 }
 
 .card-header{
@@ -68,19 +85,60 @@ body {
   background-color: rgb(46, 46, 46);
 }
 
+.card-image{
+  height:150px; 
+}
+
+.login-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  height: 60vh;
+}
+
+.card-login{
+  justify-content: center;
+  align-items: center;
+  height: 450px;
+  width: 500px;
+  background-color: rgb(37, 35, 35);
+}
+
+.upload-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  height: 60vh;
+}
+
+.card-upload{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 450px;
+  width: 500px;
+  background-color: rgb(37, 35, 35);
+}
+
+
 .page-title{
   margin-top: 20px;
 }
 
 .cards{
-  margin-top: 100px;
+  margin-top: 20px;
   margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  text-align: center;
   flex-grow: 1;
-  margin-left: 50px;
+  margin-left: 120px;
 }
 
 .board-show{
@@ -90,7 +148,28 @@ body {
 }
 
 .left-block{
+  margin-left: 50px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.fm-logo{
+  width: 800px;
+}
+
+.home-block{
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.ff-title{
+  font-weight: bold;
+  color: red;
+  font-size: 80px;
 }
