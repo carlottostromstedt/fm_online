@@ -123,3 +123,11 @@ Mit diesem Projekt habe ich gelerent, wie ich eine 3-Layer-Architektur in einer 
 | Login für einen registrierten User | User wird eingeloggt und auf die Root-Page weitergeleitet                 | User wird eingeloggt und auf die Root-Page weitergeleitet                 | x            |
 | Upload eines Screenshots           | User kann ein Bild hochladen und es wird ein Board erstellt               | User konnte ein Bild hochladen und es wird ein Board erstellt             | x            |
 | Fusionen werden angezeigt          | Bild wurde richtig analysiert und die möglichen Fusionen werden angezeigt | Bild wurde richtig analysiert und die möglichen Fusionen werden angezeigt | x            |
+
+## Reflexion
+
+Mit dieser Applikation konnte ich Image-Recognition mal an einem richtigen Projekt testen. Das schwierigste war, das Image-Recognition über einen grösseren Datensatz effizient zu machen. Momentan schauen wir für jede Karte die im Bild existiert ob sie vorhanden ist und dass auch noch in verschiedenen Grössen. Wenn man zuerst den Datensatz pre-selektionieren könnte, dann könnte man vielleicht den Prozess optimieren.
+
+Als Lösung habe ich mich für Multi-Threading entschieden. Dies ist eher Brute-Forcing und braucht recht viel Rechenleistung. Es ist also eine Kompensation des ursprünglichen Problems anstatt eine Lösung.
+
+Nächstes Mal würde ich mehr Zeit in das Optimieren der einzelnen Funktionen investieren.
