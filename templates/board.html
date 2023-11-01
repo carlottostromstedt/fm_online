@@ -11,9 +11,9 @@
             <h1> Fusions </h1>
             {% for block in fusions %}
                 <div class="fusion">
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[0] + '.jpeg')) }}"" alt="{{ board.name }}" width="100"></img>
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[1] + '.jpeg')) }}"" alt="{{ board.name }}" width="100"></img>
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[2] + '.jpeg')) }}"" alt="{{ board.name }}" width="100"></img>
+                    <img src="{{ url_for('static', filename=('large_cards/' + block[0] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
+                    <img src="{{ url_for('static', filename=('large_cards/' + block[1] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
+                    <img src="{{ url_for('static', filename=('large_cards/' + block[2] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
                 </div>
             {% endfor %}
         </div>
