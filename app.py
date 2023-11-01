@@ -95,17 +95,6 @@ def create():
 if __name__ == "__main__":
 	app.run()
 
-
-@app.route('/user/<username>')
-def user(username):
-    user = Users.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -161,18 +150,11 @@ def boards():
 
 @app.route('/boards/<id>')
 def board(id):
-    board = Board.query.filter_by(id=id).first()
+    board = Board.query.filter_by(id=id).first_or_404()
     fusions = board.fusions
-    print(fusions)
-    print(type(fusions))
-    
-   
     fusions = re.sub("\],", "].", fusions)
     fusions = re.sub(" ", "", fusions)
     fusions_array = fusions.split(".")
-    print(fusions_array)
-    print(fusions_array[0])
-    print(type(fusions_array))
     for i in range(0,len(fusions_array)):
         fusion = re.sub("\]", "", fusions_array[i])
         fusion = re.sub("\[", "", fusion)
