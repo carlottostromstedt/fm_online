@@ -3,7 +3,6 @@ from load_db import *
 
 
 def showFusions(board):
-
     match_results = match_images_to_board(board, max_threads=24)
 
     ids = match_results[0]

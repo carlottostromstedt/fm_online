@@ -1,3 +1,6 @@
 __pycache__
 .env
-/fm/lib
+
+fm
+fm_old
+uploads

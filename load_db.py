@@ -5,20 +5,29 @@ def find_card(id):
         sqliteConnection = sqlite3.connect('YFM.db')
         cursor = sqliteConnection.cursor()
 
+        card = {}  # List to store dictionaries representing cards
+
         cursor.execute(f"SELECT CardID, CardName, CardType, Attack, Defense FROM Cards WHERE CardID='{id}'")
         for row in cursor:
-            print("CardID =", row[0])
-            print("CardName =", row[1])
-            print("CardType =", row[2])
-            print("Attack =", row[3])
-            print("Defense =", row[4], "\n")
-        cursor.close()
+            card = {
+                "CardID": str(row[0]),
+                "CardName": row[1],
+                "CardType": row[2],
+                "Attack": row[3],
+                "Defense": row[4]
+            }
+            print("CardID =", card["CardID"])
+            print("CardName =", card["CardName"])
+            print("CardType =", card["CardType"])
+            print("Attack =", card["Attack"])
+            print("Defense =", card["Defense"], "\n")
 
     except sqlite3.Error as error:
         print("Error:", error)
     finally:
         if sqliteConnection:
             sqliteConnection.close()
+    return card
 
 def find_fusions(id1, id2):
     fusions = []

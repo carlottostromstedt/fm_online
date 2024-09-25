@@ -11,6 +11,7 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from datetime import datetime
 from fusions import *
+from load_db import *
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
@@ -39,7 +40,6 @@ class Board(UserMixin, db.Model):
     fusions = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('Users', back_populates='boards')
-
 
 db.init_app(app)
 
@@ -165,3 +165,9 @@ def board(id):
     # fusions = re.sub(" ", "", fusions)
     # fusions_array = fusions.split(",")
     return render_template('board.html', board=board, fusions=fusions_array)
+
+@app.route('/card/<id>')
+def card(id):
+    card = find_card(id)
+    board_id = request.args.get('board')
+    return render_template('card.html', card=card, board_id=board_id)

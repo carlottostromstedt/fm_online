@@ -11,9 +11,17 @@
             <h1> Fusions </h1>
             {% for block in fusions %}
                 <div class="fusion">
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[0] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[1] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
-                    <img src="{{ url_for('static', filename=('large_cards/' + block[2] + '.jpeg')) }}"" alt="{{ board.name }}" width="150"></img>
+                    <a href="/card/{{ block[0] }}?board={{board.id}}">
+                        <img src="{{ url_for('static', filename=('large_cards/' + block[0] + '.jpg')) }}"" alt="{{ board.name }}" width="150" height="211"></img>
+                    </a>
+                    {% if block|length > 1 %}
+                        <a href="/card/{{ block[1] }}?board={{board.id}}">
+                            <img src="{{ url_for('static', filename=('large_cards/' + block[1] + '.jpg')) }}"" alt="{{ board.name }}" width="150" height="211"></img>
+                        </a>
+                        <a href="/card/{{ block[2] }}?board={{board.id}}">
+                            <img src="{{ url_for('static', filename=('large_cards/' + block[2] + '.jpg')) }}"" alt="{{ board.name }}" width="150" height="211"></img>
+                        </a>    
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

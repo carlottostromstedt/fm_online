@@ -187,3 +187,13 @@ body {
   color: red;
   font-size: 80px;
 }
+
+.card-picture{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.row{
+  justify-content: space-around;
+}

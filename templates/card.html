@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card-picture" >
+        <div class="left-block">
+            <img src="{{ url_for('static', filename=('large_cards/' + card['CardID'] + '.jpg')) }}" alt="id" width="400"></img>
+            <a class="btn btn-primary" style="width: 100px; margin-top: 20px" href="/boards/{{ board_id }}">Return</a>
+        </div>
+        <div class="card-information">
+            <h1> Card Information </h1>
+            <h3> {{ card["CardName"] }} </h3>
+            <h3> {{ card["CardType"] }} </h3>
+            <h3> {{ card["Attack"] }} </h3>
+            <h3> {{ card["Defense"] }} </h3>
+        </div>
+    </div>
+{% endblock %}
