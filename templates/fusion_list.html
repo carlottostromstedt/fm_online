@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card-picture" >
+        <div class="left-block">
+            <img src="{{ url_for('static', filename=('large_cards/' + card['CardID'] + '.jpg')) }}" alt="id" width="400"></img>
+            <a class="btn btn-primary" style="width: 100px; margin-top: 20px" href="/search">Return</a>
+        </div>
+        <div class="card-information">
+            <h1> Card Information </h1>
+            <h3> {{ card["CardName"] }} </h3>
+            <h3> {{ card["CardType"] }} </h3>
+            <h3> {{ card["Attack"] }} </h3>
+            <h3> {{ card["Defense"] }} </h3>
+        </div>
+    </div>
+    <div class="cards2 card-information">
+            <h1> Fusions </h1>
+            {% for block in fusions %}
+                <div class="fusion">
+                    <a href="/card/{{ block[0] }}?board=1">
+                        <img src="{{ url_for('static', filename=('large_cards/' + block[0] + '.jpg')) }}"" alt="bb" width="150" height="211"></img>
+                    </a>
+                    {% if block|length > 1 %}
+                        <a href="/card/{{ block[1] }}?board=1">
+                            <img src="{{ url_for('static', filename=('large_cards/' + block[1] + '.jpg')) }}"" alt="bb" width="150" height="211"></img>
+                        </a>
+                        <a href="/card/{{ block[2] }}?board=1">
+                            <img src="{{ url_for('static', filename=('large_cards/' + block[2] + '.jpg')) }}"" alt="bb" width="150" height="211"></img>
+                        </a>    
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}
+

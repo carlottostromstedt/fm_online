@@ -17,9 +17,9 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SECRET_KEY"] = "abc"
 
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+UPLOAD_FOLDER = "uploads"
+ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 db = SQLAlchemy()
 bcrypt = Bcrypt(app)  # Initialize Flask-Bcrypt
@@ -27,36 +27,41 @@ bcrypt = Bcrypt(app)  # Initialize Flask-Bcrypt
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
-    boards = db.relationship('Board', back_populates='user')
+    boards = db.relationship("Board", back_populates="user")
+
 
 class Board(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), unique=True, nullable=False)
     filename = db.Column(db.String(250), unique=True, nullable=False)
     fusions = db.Column(db.String(1000))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('Users', back_populates='boards')
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user = db.relationship("Users", back_populates="boards")
+
 
 db.init_app(app)
 
 
 with app.app_context():
-	db.create_all()
+    db.create_all()
 
 
 @login_manager.user_loader
 def loader_user(user_id):
-	return Users.query.get(user_id)
+    return Users.query.get(user_id)
 
 
-@app.route('/register', methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        hashed_password = bcrypt.generate_password_hash(request.form.get("password")).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(
+            request.form.get("password")
+        ).decode("utf-8")
         user = Users(username=request.form.get("username"), password=hashed_password)
         db.session.add(user)
         db.session.commit()
@@ -68,7 +73,9 @@ def register():
 def login():
     if request.method == "POST":
         user = Users.query.filter_by(username=request.form.get("username")).first()
-        if user and bcrypt.check_password_hash(user.password, request.form.get("password")):
+        if user and bcrypt.check_password_hash(
+            user.password, request.form.get("password")
+        ):
             login_user(user)
             return redirect(url_for("home"))
     return render_template("login.html")
@@ -76,46 +83,50 @@ def login():
 
 @app.route("/logout")
 def logout():
-	logout_user()  
-	return redirect(url_for("home"))
+    logout_user()
+    return redirect(url_for("home"))
+
 
 @app.route("/")
 def home():
-	return render_template("home.html")
+    return render_template("home.html")
 
-@app.route('/create', methods=["GET", "POST"])
+
+@app.route("/create", methods=["GET", "POST"])
 def create():
-	if request.method == "POST":
-		board = Board(name=request.form.get("name"))
-		db.session.add(board)
-		db.session.commit()
-		return redirect(url_for("BOARD"))
-	return render_template("create_board.html")
+    if request.method == "POST":
+        board = Board(name=request.form.get("name"))
+        db.session.add(board)
+        db.session.commit()
+        return redirect(url_for("BOARD"))
+    return render_template("create_board.html")
+
 
 if __name__ == "__main__":
-	app.run()
+    app.run()
+
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
+
+@app.route("/upload", methods=["GET", "POST"])
 def upload_file():
-    if request.method == 'POST':
+    if request.method == "POST":
         # Check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
+        if "file" not in request.files:
+            flash("No file part")
             return redirect(request.url)
-        file = request.files['file']
+        file = request.files["file"]
         # If the user does not select a file, the browser also
         # submits an empty part without a filename
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == "":
+            flash("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
             # Generate a unique filename
-            unique_filename = str(uuid.uuid4()) + '_' + secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
+            unique_filename = str(uuid.uuid4()) + "_" + secure_filename(file.filename)
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], unique_filename))
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
             boardname = "Board-" + current_time
@@ -125,37 +136,49 @@ def upload_file():
             fusion_results = showFusions(path)
             analyzed_image = fusion_results[1]
             print(type(analyzed_image))
-            cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], ("analyzed" + unique_filename)), analyzed_image) 
+            cv2.imwrite(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"], ("analyzed" + unique_filename)
+                ),
+                analyzed_image,
+            )
             fusions = f"{fusion_results[0]}"
             fusions = fusions[1:-1]
             fusions = re.sub("'", "", fusions)
             print("FINISHED FUSIONS")
             # Create a new board associated with the current user
-            board = Board(name=boardname, filename=unique_filename, user=current_user, fusions=fusions)
+            board = Board(
+                name=boardname,
+                filename=unique_filename,
+                user=current_user,
+                fusions=fusions,
+            )
             db.session.add(board)
             db.session.commit()
-            
-            return redirect(url_for('boards', filename=unique_filename))
+
+            return redirect(url_for("boards", filename=unique_filename))
     return render_template("upload.html")
 
-@app.route('/uploads/<filename>')
+
+@app.route("/uploads/<filename>")
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
-@app.route('/boards')
+
+@app.route("/boards")
 def boards():
-    boards = Board.query.all() 
-    return render_template('boards.html', boards=boards)
+    boards = Board.query.all()
+    return render_template("boards.html", boards=boards)
 
-@app.route('/boards/<id>')
+
+@app.route("/boards/<id>")
 def board(id):
     board = Board.query.filter_by(id=id).first_or_404()
     fusions = board.fusions
     fusions = re.sub("\],", "].", fusions)
     fusions = re.sub(" ", "", fusions)
     fusions_array = fusions.split(".")
-    for i in range(0,len(fusions_array)):
+    for i in range(0, len(fusions_array)):
         fusion = re.sub("\]", "", fusions_array[i])
         fusion = re.sub("\[", "", fusion)
         fusion = fusion.split(",")
@@ -164,10 +187,41 @@ def board(id):
     # fusions = re.sub("\]", "", fusions)
     # fusions = re.sub(" ", "", fusions)
     # fusions_array = fusions.split(",")
-    return render_template('board.html', board=board, fusions=fusions_array)
+    return render_template("board.html", board=board, fusions=fusions_array)
 
-@app.route('/card/<id>')
+
+@app.route("/card/<id>")
 def card(id):
     card = find_card(id)
-    board_id = request.args.get('board')
-    return render_template('card.html', card=card, board_id=board_id)
+    board_id = request.args.get("board")
+    return render_template("card.html", card=card, board_id=board_id)
+
+
+@app.route("/fusion_list")
+def fusion_list():
+    return render_template("fusion_list.html")
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        card_name = request.form.get("card_name")
+        card = find_card_by_name(card_name)
+
+        if not card:
+            return render_template(
+                "search.html", error=f"No card found with name '{card_name}'"
+            )
+
+        card_ids = get_all_card_ids()
+
+        fusions = []
+        for id in card_ids:
+            fusions.append(find_fusions(card["CardID"], id))
+
+        fusions = remove_empty_nested_arrays(fusions)
+        fusions_ready = [fusion[0] for fusion in fusions]
+
+        return render_template("fusion_list.html", card=card, fusions=fusions_ready)
+
+    return render_template("search.html")
